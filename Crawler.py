@@ -9,8 +9,16 @@ def techSpider(maxPages):
         plainText = source_code.text
         soup = BeautifulSoup(plainText)
         for link in soup.findAll("a", {"class": "marginright5 link linkWithHash detailsLink"}):
-            href = link.get("href")
-            print(href)
+            href = "https://www.olx.pt/anuncio" + link.get("href")
+            #print(href)
+            getSingleItemData(href)
         page +=1
 
-techSpider(2)
+def getSingleItemData(itemUrl):
+    source_code = requests.get(itemUrl)
+    plainText = source_code.text
+    soup = BeautifulSoup(plainText)
+    for itemName in soup.findAll("a", {"class" : "item-name"}):
+        print(itemName.string)
+
+techSpider(1)
